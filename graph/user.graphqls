@@ -1,0 +1,63 @@
+enum UserStatus {
+    active,
+    blocked
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    status: UserStatus!
+    isAdmin: Boolean!
+    createdAt: Time!
+    updatedAt: Time
+    deletedAt: Time
+    passwordHash: String!
+}
+
+type UserSession {
+    id: ID!
+    token: String!
+    userID: ID!
+    createdAt: Time!
+    updatedAt: Time
+    deletedAt: Time
+}
+
+
+input RegisterForm {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input SignInForm {
+    email: String!
+    password: String!
+}
+
+input NewUser {
+    name: String!
+    email: String!
+    isAdmin: Boolean
+    password: String!
+}
+
+input UpdateUser {
+    name: String!
+    email: String!
+    status: UserStatus!
+    isAdmin: Boolean
+    password: String!
+}
+
+extend type Query {
+    users(limit: Int = 10, offset: Int = 0): [User]!
+}
+
+extend type Mutation {
+    signIn(input: SignInForm): UserSession
+    register(input: RegisterForm!): UserSession
+    createUser(input: NewUser): User!
+    updateUser(input: UpdateUser): User!
+}

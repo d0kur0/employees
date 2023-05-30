@@ -1,0 +1,70 @@
+scalar Time
+
+type TeamPosition {
+  id: ID!
+  name: String!
+  teamID: ID!
+  createdAt: Time!
+  updatedAt: Time
+  deletedAt: Time
+  createdByUserID: ID!
+  updatedByUserID: ID
+  deletedByUserID: ID
+}
+
+type TeamMember {
+  id: ID!
+  userID: ID!
+  createdAt: Time!
+  updatedAt: Time
+  deletedAt: Time
+  positions: [TeamPosition]!
+  invitedByUserID: ID!
+}
+
+type Team {
+  id: ID!
+  name: String!
+  members: [TeamMember]!
+  ownerUserId: ID!
+  departmentId: ID!
+}
+
+type Query {
+  teams(limit: Int = 10, offset: Int = 0, departmentID: ID): [Team]!
+}
+
+
+input NewTeam {
+  name: String!
+  members: [ID]!
+  ownerUserId: ID!
+  departmentID: ID!
+}
+
+input NewInviteToTeam {
+  userID: ID!
+  positionID: ID!
+}
+
+input NewPosition {
+  name: String!
+  teamID: ID!
+}
+
+input UpdatePosition {
+  name: String!
+}
+
+type Mutation {
+  createTeamPosition(input: NewPosition): TeamPosition
+  updateTeamPosition(input: UpdatePosition): TeamPosition
+  deleteTeamPosition(positionID: ID!): Boolean
+
+  createTeam(input: NewTeam): Team
+  updateTeam(input: NewTeam): Team
+  deleteTeam(teamID: ID!): Boolean
+
+  inviteUserToTeam(input: NewInviteToTeam!): Boolean
+  removeUserFromTeam(userID: ID!): Boolean
+}

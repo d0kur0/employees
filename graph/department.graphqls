@@ -1,0 +1,23 @@
+type Department {
+    id: ID!
+    name: String!
+    createdAt: Time!
+    updatedAt: Time
+    deletedAt: Time
+    ownerUserId: ID!
+}
+
+input NewDepartment {
+    name: String!
+    ownerUserId: ID!
+}
+
+extend type Query {
+    departments(limit: Int = 10, offset: Int = 0): [Department]!
+}
+
+extend type Mutation {
+    createDepartment(input: NewDepartment!): Department!
+    updateDepartment(input: NewDepartment!): Department!
+    deleteDepartment(input: ID!): Boolean
+}
