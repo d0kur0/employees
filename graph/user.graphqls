@@ -12,7 +12,7 @@ type User {
     createdAt: Time!
     updatedAt: Time
     deletedAt: Time
-    passwordHash: String!
+    passwordHash: String! @goTag(key: "json", value: "-")
 }
 
 type UserSession {
@@ -23,7 +23,6 @@ type UserSession {
     updatedAt: Time
     deletedAt: Time
 }
-
 
 input RegisterForm {
     name: String!

@@ -109,7 +109,7 @@ type User struct {
 	CreatedAt    time.Time  `json:"createdAt"`
 	UpdatedAt    *time.Time `json:"updatedAt,omitempty"`
 	DeletedAt    *time.Time `json:"deletedAt,omitempty"`
-	PasswordHash string     `json:"passwordHash"`
+	PasswordHash string     `json:"-"`
 }
 
 type UserSession struct {
